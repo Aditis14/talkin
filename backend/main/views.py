@@ -1,5 +1,5 @@
 from django.db.models.fields import EmailField
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from .serializers import *
 from rest_framework.decorators import api_view
@@ -20,9 +20,9 @@ class ContactPostView(generics.GenericAPIView):
             s.email = email
             s.save()
             return Response({
-                "success":"Thank you for subscribing!"
+                "message": True
             })
         except:
             return Response({
-                "error":"Some error occured...Please try again later"
+                "message": False
             }) 

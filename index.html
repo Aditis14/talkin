@@ -78,8 +78,8 @@
             <h2>Consult to Experts and mentors in a wide range of areas.</h2>
             <div class="text-center text-lg-left">
               <button data-tf-popup="u0jQp9dc" style="all:unset;font-family:Helvetica,Arial,sans-serif;display:inline-block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background-color:#0445AF;color:#FFFFFF;font-size:20px;border-radius:25px;padding:0 33px;font-weight:bold;height:50px;cursor:pointer;line-height:50px;text-align:center;margin:0;text-decoration:none;">Launch me</button><script src="//embed.typeform.com/next/embed.js"></script>              <br>
-              <br>
             </div>
+            
           </div>
         </div>
         <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="300">
@@ -575,8 +575,8 @@ We bring the best of the best to advice you in the best way possible, in the wid
           <div class="col-lg-4 col-md-6 footer-newsletter">
             <h4>Our Newsletter</h4>
             <p>Keep in touch.</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
+            <form  name="sub">
+              <input type="email" name="email"><input type="submit" name="submit" value="submit">
             </form>
 
           </div>
@@ -601,6 +601,42 @@ We bring the best of the best to advice you in the best way possible, in the wid
 
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
   <div id="preloader"></div>
+
+  <script>
+    let obj = {
+      email: 'test@test.com'
+    }
+
+    
+    var form = document.forms.namedItem("sub");
+    function handleForm(event) {
+        event.preventDefault();
+        oData = new FormData(form);
+        var object = {};
+        oData.forEach((value, key) => {object[key] = value});
+        var json = JSON.stringify(object);
+        fetch("https://thetalkin.com/talkin/subscribe/", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: json,
+        })
+        .then((res) => {
+          const promise = Promise.resolve(res.json());
+          promise.then((response) => {
+            if(response.message == true)
+              alert('Thank you for subscribing!')
+            else
+              alert('Some error occured...Please try again later')
+          });
+        })
+        .catch((err) => {
+        console.log(err.message)
+        })
+        
+    }
+    form.addEventListener('submit', handleForm);
+    
+  </script>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/jquery/jquery.min.js"></script>
