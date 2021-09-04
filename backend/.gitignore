@@ -1,0 +1,4 @@
+db.sqlite3
+backend/__pycache__/
+main/__pycache__/
+backend/keyconfig.py

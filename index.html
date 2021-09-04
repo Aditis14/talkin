@@ -76,10 +76,10 @@
           <div data-aos="zoom-out">
             <h1>Real People. Real Advice.<br> <span>Ask with Talkin.</span></h1>
             <h2>Consult to Experts and mentors in a wide range of areas.</h2>
-            <div class="text-center text-lg-left">
-              <button data-tf-popup="u0jQp9dc" style="all:unset;font-family:Helvetica,Arial,sans-serif;display:inline-block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background-color:#0445AF;color:#FFFFFF;font-size:20px;border-radius:25px;padding:0 33px;font-weight:bold;height:50px;cursor:pointer;line-height:50px;text-align:center;margin:0;text-decoration:none;">Launch me</button><script src="//embed.typeform.com/next/embed.js"></script>              <br>
-              <br>
+            <div class="text-center text-lg-left" style="display: flex; align-items: center;">
+              <button data-tf-popup="u0jQp9dc" style="all:unset;font-family:Helvetica,Arial,sans-serif;display:inline-block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background-color:#0445AF;color:#FFFFFF;font-size:20px;border-radius:25px;padding:0 33px;font-weight:bold;height:50px;cursor:pointer;line-height:50px;text-align:center;margin:0;text-decoration:none;">Launch me</button><script src="//embed.typeform.com/next/embed.js"></script><br>
             </div>
+            
           </div>
         </div>
         <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="300">
@@ -530,76 +530,7 @@ We bring the best of the best to advice you in the best way possible, in the wid
       </div>
     </section><!-- End F.A.Q Section -->
 
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-      <div class="container">
-
-        <div class="section-title" data-aos="fade-up">
-          <h2>Contact</h2>
-          <p>Contact Us</p>
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-4" data-aos="fade-right" data-aos-delay="100">
-            <div class="info">
-              <div class="address">
-                <i class="icofont-google-map"></i>
-                <h4>Location:</h4>
-                <p>Jaipur, India</p>
-              </div>
-
-              <div class="email">
-                <i class="icofont-envelope"></i>
-                <h4>Email:</h4>
-                <p>s.aditi014@gmail.com</p>
-              </div>
-
-              <div class="phone">
-                <i class="icofont-phone"></i>
-                <h4>Call:</h4>
-                <p></p>
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="col-lg-8 mt-5 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
-
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="form-row">
-                <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                  <div class="validate"></div>
-                </div>
-                <div class="col-md-6 form-group">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                  <div class="validate"></div>
-                </div>
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                <div class="validate"></div>
-              </div>
-              <div class="form-group">
-                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-                <div class="validate"></div>
-              </div>
-              <div class="mb-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Contact Section -->
+    
 
   </main><!-- End #main -->
 
@@ -644,8 +575,8 @@ We bring the best of the best to advice you in the best way possible, in the wid
           <div class="col-lg-4 col-md-6 footer-newsletter">
             <h4>Our Newsletter</h4>
             <p>Keep in touch.</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
+            <form  name="sub">
+              <input type="email" name="email"><input type="submit" name="submit" value="submit" onsubmit="myFunc()">
             </form>
 
           </div>
@@ -670,6 +601,44 @@ We bring the best of the best to advice you in the best way possible, in the wid
 
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
   <div id="preloader"></div>
+
+  <script>
+    let obj = {
+      email: 'test@test.com'
+    }
+    
+    var form = document.forms.namedItem("sub");
+    function handleForm(event) {
+        event.preventDefault();
+        oData = new FormData(form);
+        var object = {};
+        oData.forEach((value, key) => {object[key] = value});
+        var json = JSON.stringify(object);
+        fetch("https://thetalkin.com/talkin/subscribe/", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: json,
+        })
+        .then((res) => {
+          const promise = Promise.resolve(res.json());
+          promise.then((response) => {
+            if(response.message == true)
+              alert('Thank you for subscribing!')
+            else
+              alert('Some error occured...Please try again later')
+          });
+        })
+        .catch((err) => {
+        console.log(err.message)
+        })
+
+        form.reset()
+        return false;
+        
+    }
+    form.addEventListener('submit', handleForm);
+
+  </script>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/jquery/jquery.min.js"></script>
